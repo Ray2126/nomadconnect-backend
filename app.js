@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
-import mongodb from './mongodb';
+import mongodb from './mongodb.js';
 const app = express();
 const port = process.env.PORT || 3001;
 
