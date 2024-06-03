@@ -20,3 +20,15 @@ jobs:
         with: { node-version: '20' }
       - run: npm install
       - run: npm run lint
+
+  deploy:
+    timeout-minutes: 5
+    runs-on: ubuntu-22.04
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy
+        env:
+          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: curl "$deploy_url"
+    
+    
