@@ -1,5 +1,5 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = process.env.MONGO_URI
+import { MongoClient, ServerApiVersion } from 'mongodb';
+const uri = process.env.MONGO_URI;
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -9,4 +9,4 @@ const client = new MongoClient(uri, {
   }
 });
 
-module.exports = client;
+export default client;
