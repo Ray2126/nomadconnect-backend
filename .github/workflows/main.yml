@@ -20,9 +20,21 @@ jobs:
         with: { node-version: '20' }
       - run: npm install
       - run: npm run lint
+  
+  test:
+    timeout-minutes: 5
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - run: npm install
+      - run: npm run test
+        env:
+          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
 
   deploy:
-    needs: [ lint ]
+    needs: [ lint, test ]
     timeout-minutes: 5
     runs-on: ubuntu-22.04
     if: github.ref == 'refs/heads/main'

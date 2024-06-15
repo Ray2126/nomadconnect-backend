@@ -1,11 +1,11 @@
-import mongodb from '../../mongodb.js';
-const collection = mongodb.collection('users');
-
-// await mongodb.db('sample_airbnb').collection('listingsAndReviews').createIndex({ 'apple': 1 }, { unique: true, sparse: true, name: 'my-new-index' });
+import mongodb from '../../mongodb/index.js';
 
 const usersCollection = {
   async createUser(user) {
-    const result = await collection.insertOne(await user.toMongoDocument());
+    const result = await mongodb
+      .db
+      .collection('users')
+      .insertOne(await user.toMongoDocument());
     user._id = result.insertedId;
   }
 };
