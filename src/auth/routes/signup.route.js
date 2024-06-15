@@ -25,7 +25,7 @@ async function handleSignUp(req, res) {
   const token = await createJwt({ userId: user._id });
   return res
     .status(200)
-    .cookie(('token', token, { withCredentials: true, httpOnly: false }))
+    .cookie('token', token, { withCredentials: true, httpOnly: false })
     .json(user.toApiResponse());
 }
 
