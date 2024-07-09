@@ -6,7 +6,7 @@ import app from '../../../app';
 describe('Signup endpoint', () => {
   it('should return successful response when given correct payload', async () => {
     const payload = {
-      email: 'acbddd.co.nz',
+      email: 'acbddd@gmail.com',
       password: '13768'
     };
     const res = await request(app)
@@ -24,7 +24,7 @@ describe('Signup endpoint', () => {
 
   it('should return JWT token in cookies when given correct payload', async () => {
     const payload = {
-      email: 'acbddd.co.nz',
+      email: 'acbddd@gmail.com',
       password: '13768'
     };
     const res = await request(app)
@@ -45,7 +45,7 @@ describe('Signup endpoint', () => {
 
   it('should return USER_EMAIL_ALREADY_EXISTS when a user with the given email already exists', async () => {
     const payload = {
-      email: 'acbddd.co.nz',
+      email: 'acbddd@gmail.com',
       password: '13768'
     };
     const firstRes = await request(app)
@@ -64,6 +64,21 @@ describe('Signup endpoint', () => {
       error: 'Forbidden',
       message: 'USER_EMAIL_ALREADY_EXISTS',
       statusCode: 403,
+    });
+  });
+
+  it('should fail with joi error when password is missing from payload', async () => {
+    const payload = {
+      email: 'acbddd@gmail.com'
+    };
+    const res = await request(app)
+      .post('/api/auth/signup')
+      .send(payload)
+      .set('Accept', 'application/json');
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toEqual({
+      error: '"password" is required'
     });
   });
 });

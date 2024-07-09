@@ -3,6 +3,13 @@ const router = express.Router();
 import User from '../models/User.js';
 import usersCollection from '../../users/mongodb/usersCollection.js';
 import createJwt from '../../createJwt.js';
+import validatePayload from '../../middleware/validatePayload.js';
+import Joi from 'joi';
+
+const schema = Joi.object({
+  email: Joi.string().required().email(),
+  password: Joi.string().required(),
+});
 
 // eslint-disable-next-line complexity
 async function handleSignUp(req, res) {
@@ -29,5 +36,5 @@ async function handleSignUp(req, res) {
     .json(user.toApiResponse());
 }
 
-router.post('/auth/signup', handleSignUp);
+router.post('/auth/signup', validatePayload(schema), handleSignUp);
 export default router;
