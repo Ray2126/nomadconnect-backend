@@ -81,4 +81,35 @@ describe('Signup endpoint', () => {
       error: '"password" is required'
     });
   });
+
+  it('should fail with joi error when email is missing from payload', async () => {
+    const payload = {
+      password: '1234'
+    };
+    const res = await request(app)
+      .post('/api/auth/signup')
+      .send(payload)
+      .set('Accept', 'application/json');
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toEqual({
+      error: '"email" is required'
+    });
+  });
+
+  it('should fail with joi error when email is not a well-formed email', async () => {
+    const payload = {
+      email: 'abcd@co@nz',
+      password: '1234'
+    };
+    const res = await request(app)
+      .post('/api/auth/signup')
+      .send(payload)
+      .set('Accept', 'application/json');
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toEqual({
+      error: '"email" must be a valid email'
+    });
+  });
 });
