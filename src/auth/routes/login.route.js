@@ -1,33 +1,29 @@
 import express from 'express';
 const router = express.Router();
-import User from '../models/User.js';
 import usersCollection from '../../users/mongodb/usersCollection.js';
 import createJwt from '../../createJwt.js';
 import validatePayload from '../../middleware/validatePayload.js';
 import Joi from 'joi';
+import bcrypt from 'bcrypt';
 
 const schema = Joi.object({
   email: Joi.string().required().email(),
   password: Joi.string().required(),
 });
 
-// eslint-disable-next-line complexity
-async function handleSignUp(req, res) {
+async function handleLogin(req, res) {
   const { email, password } = req.body;
-  const user = new User({
-    email,
-    password,
-  });
-  try {
-    await usersCollection.createUser(user);
-  } catch (err) {
-    const isDuplicateEmailError = err.errorResponse?.code === 11000 && err.errorResponse?.keyPattern?.email === 1;
-    if(isDuplicateEmailError) {
-      return res
-        .status(403)
-        .json({ statusCode: 403, error: 'Forbidden', message: 'USER_EMAIL_ALREADY_EXISTS' });
-    }
-    throw err;
+  const user = await usersCollection.getUserByEmail(email);
+  if(!user) {
+    return res
+      .status(403)
+      .json({ statusCode: 403, error: 'Forbidden', message: 'USER_NOT_FOUND' });
+  }
+  const match = await bcrypt.compare(password, user.password);
+  if(!match) {
+    return res
+      .status(403)
+      .json({ statusCode: 403, error: 'Forbidden', message: 'USER_NOT_FOUND' });
   }
   const token = await createJwt({ userId: user.id });
   return res
@@ -36,5 +32,5 @@ async function handleSignUp(req, res) {
     .json(user.toApiResponse());
 }
 
-router.post('/api/auth/signup', validatePayload(schema), handleSignUp);
+router.post('/api/auth/login', validatePayload(schema), handleLogin);
 export default router;

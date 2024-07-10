@@ -2,10 +2,19 @@ import bcrypt from 'bcrypt';
 
 class User {
   constructor(props) {
-    this._id = props.id;
+    this.id = props.id;
     this.password = props.password;
     this.email = props.email;
     this.createdAt = props.createdAt || new Date();
+  }
+
+  static fromMongoDocument(doc) {
+    return new User({
+      id: doc._id,
+      password: doc.password,
+      email: doc.email,
+      createdAt: new Date(doc.createdAt),
+    });
   }
 
   async toMongoDocument() {
@@ -19,7 +28,7 @@ class User {
 
   toApiResponse() {
     return {
-      id: this._id,
+      id: this.id,
       email: this.email,
       createdAt: this.createdAt,
     };
