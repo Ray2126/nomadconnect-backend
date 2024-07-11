@@ -28,7 +28,7 @@ async function handleLogin(req, res) {
   const token = await createJwt({ userId: user.id });
   return res
     .status(200)
-    .cookie('token', token, { withCredentials: true, httpOnly: false })
+    .cookie('token', token, { secure: true, httpOnly: true })
     .json(user.toApiResponse());
 }
 
