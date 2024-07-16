@@ -1,29 +1,10 @@
 import request from 'supertest';
-import app from '../../../app';
-
-let userId;
-let jwt;
-async function signUp() {
-  const payload = {
-    email: 'testing@gmail.com',
-    password: '13768'
-  };
-  const res = await request(app)
-    .post('/api/auth/signup')
-    .send(payload)
-    .set('Accept', 'application/json');
-  userId = res.body.id;
-  const cookies = res.headers['set-cookie'];
-  const tokenCookie = cookies.find(cookie => cookie.startsWith('token='));
-  jwt = tokenCookie.split('token=')[1].split(';')[0];
-}
+import app from '../../../app.js';
+import mockSignUp from '../../../utilities/mockSignUp.js';
 
 describe('Get User endpoint', () => {
-  beforeAll(async () => {
-    await signUp();
-  });
-
   it('should return the user when given correct ID', async () => {
+    const { userId, jwt } = await mockSignUp();
     const res = await request(app)
       .get(`/api/users/${userId}`)
       .set('Cookie', [`token=${jwt}`])
@@ -38,8 +19,9 @@ describe('Get User endpoint', () => {
   });
 
   it('should throw a 403 USER_NOT_FOUND error when given incorrect ID', async () => {
+    const { jwt } = await mockSignUp();
     const res = await request(app)
-      .get(`/api/users/${userId}`)
+      .get('/api/users/60d5f8f7e3b3c23d74f58069')
       .set('Cookie', [`token=${jwt}`])
       .send();
 
