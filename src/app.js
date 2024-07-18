@@ -5,6 +5,7 @@ import express from 'express';
 import authorizeMiddleware from './middleware/authorize.js';
 import authRoutes from './auth/routes/index.js';
 import userRoutes from './users/routes/index.js';
+import journeyPointRoutes from './journey-points/routes/index.js';
 const app = express();
 
 app.use(cors({
@@ -16,5 +17,6 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(authRoutes);
 app.use(authorizeMiddleware, userRoutes);
+app.use(authorizeMiddleware, journeyPointRoutes);
 
 export default app;
