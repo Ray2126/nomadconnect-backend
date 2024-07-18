@@ -1,4 +1,4 @@
-import User from '../../auth/models/User.js';
+import User from '../models/User.js';
 import mongodb from '../../mongodb/index.js';
 import { ObjectId } from 'mongodb';
 
