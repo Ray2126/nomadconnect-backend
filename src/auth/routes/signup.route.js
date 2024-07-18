@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import User from '../models/User.js';
+import User from '../../users/models/User.js';
 import usersCollection from '../../users/mongodb/usersCollection.js';
 import createJwt from '../../createJwt.js';
 import validatePayload from '../../middleware/validatePayload.js';
