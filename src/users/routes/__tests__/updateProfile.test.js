@@ -18,7 +18,7 @@ describe('Update Profile endpoint', () => {
       ]
     };
     const res = await request(app)
-      .put(`/api/users/${userId}/profile`)
+      .put('/api/profile')
       .set('Cookie', [`token=${jwt}`])
       .send(payload)
       .set('Accept', 'application/json');
@@ -38,24 +38,6 @@ describe('Update Profile endpoint', () => {
       socialLinks: [
         { type: 'linkedin', 'url': 'https://www.linkedin.com/in/raymond-yang-96365419a/' },
       ]
-    });
-  });
-
-  it('should throw 401 error when attempting to update a different user', async () => {
-    const { jwt } = await mockSignUp();
-    const payload = {
-      name: 'Raymond',
-    };
-    const res = await request(app)
-      .put('/api/users/60d5f8f7e3b3c23d74f58069/profile')
-      .set('Cookie', [`token=${jwt}`])
-      .send(payload)
-      .set('Accept', 'application/json');
-
-    expect(res.statusCode).toEqual(401);
-    expect(res.body).toEqual({
-      statusCode: 401,
-      error: 'Unauthorized'
     });
   });
 
@@ -87,9 +69,9 @@ describe('Update Profile endpoint', () => {
 
     invalidScenarios.forEach(scenario => {
       it(`should fail when ${scenario.name}`, async () => {
-        const { userId, jwt } = await mockSignUp();
+        const { jwt } = await mockSignUp();
         const res = await request(app)
-          .put(`/api/users/${userId}/profile`)
+          .put('/api/profile')
           .set('Cookie', [`token=${jwt}`])
           .send(scenario.payload)
           .set('Accept', 'application/json');
