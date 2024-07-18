@@ -26,6 +26,13 @@ const usersCollection = {
       .findOne({ _id: ObjectId.createFromHexString(id) });
     return result ? User.fromMongoDocument(result) : undefined;
   },
+
+  async updateUser(user) {
+    await mongodb
+      .db
+      .collection('users')
+      .updateOne({ _id: user.id }, { $set: user.toMongoUpdateDocument() });
+  },
 };
 
 export default usersCollection;
