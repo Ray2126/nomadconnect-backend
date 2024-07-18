@@ -18,13 +18,7 @@ const schema = Joi.object({
 
 async function handleUpdateProfile(req, res) {
   const userId = req.userId;
-  const id = req.params.id;
-  if(userId !== id) {
-    return res
-      .status(401)
-      .json({ statusCode: 401, error: 'Unauthorized' });
-  }
-  const user = await usersCollection.getUserById(id);
+  const user = await usersCollection.getUserById(userId);
   user.updateProfile(req.body);
   await usersCollection.updateUser(user);
   return res
@@ -32,5 +26,5 @@ async function handleUpdateProfile(req, res) {
     .json(user.toApiResponse());
 }
 
-router.put('/api/users/:id/profile', validatePayload(schema), handleUpdateProfile);
+router.put('/api/profile', validatePayload(schema), handleUpdateProfile);
 export default router;
