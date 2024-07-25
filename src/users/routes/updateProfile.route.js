@@ -21,7 +21,7 @@ const schema = Joi.object({
     .pattern(/^data:image\/(jpeg|jpg|png|gif|bmp|webp|svg);base64,[A-Za-z0-9+/=]+$/)
     .max(PROFILE_PICTURE_SIZE_LIMIT)
     .optional(),
-}).min(1);
+});
 
 async function handleUpdateProfile(req, res) {
   const userId = req.userId;
