@@ -34,6 +34,13 @@ const journeyPointsCollection = {
       .collection('journey-points')
       .deleteOne({ _id: id });
   },
+
+  async updateJourneyPoint(journeyPoint) {
+    await mongodb
+      .db
+      .collection('journey-points')
+      .updateOne({ _id: journeyPoint.id }, { $set: journeyPoint.toMongoUpdateDocument() });
+  },
 };
 
 export default journeyPointsCollection;

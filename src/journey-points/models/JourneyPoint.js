@@ -44,6 +44,18 @@ class JourneyPoint {
       departureDate: this.departureDate,
     };
   }
+
+  update(props) {
+    this.arrivalDate = props.arrivalDate ?? this.arrivalDate;
+    this.departureDate = props.departureDate ?? this.departureDate;
+  }
+
+  toMongoUpdateDocument() {
+    return {
+      arrivalDate: this.arrivalDate,
+      departureDate: this.departureDate,
+    };
+  }
 }
 
 export default JourneyPoint;
