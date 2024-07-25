@@ -4,10 +4,9 @@ import mockSignUp from '../../../utilities/mockSignUp.js';
 
 describe('Get User endpoint', () => {
   it('should return the user when given correct ID', async () => {
-    const { userId, jwt } = await mockSignUp();
+    const { userId } = await mockSignUp();
     const res = await request(app)
-      .get('/api/users')
-      .set('Cookie', [`token=${jwt}`])
+      .get(`/api/users/${userId}`)
       .send();
 
     expect(res.statusCode).toEqual(200);

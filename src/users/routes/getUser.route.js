@@ -4,7 +4,7 @@ const router = express.Router();
 import usersCollection from '../mongodb/usersCollection.js';
 
 async function handleGetUser(req, res) {
-  const id = req.userId;
+  const id = req.params.id;
   const user = await usersCollection.getUserById(id);
   if(!user) {
     return res
@@ -16,5 +16,5 @@ async function handleGetUser(req, res) {
     .json(user.toApiResponse());
 }
 
-router.get('/api/users', handleGetUser);
+router.get('/api/users/:id', handleGetUser);
 export default router;
