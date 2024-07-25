@@ -9,6 +9,18 @@ class JourneyPoint {
     this.departureDate = props.departureDate;
   }
 
+  static fromMongoDocument(doc) {
+    return new JourneyPoint({
+      id: doc._id,
+      createdAt: new Date(doc.createdAt),
+      userId: doc.userId,
+      city: doc.city,
+      country: doc.country,
+      arrivalDate: doc.arrivalDate,
+      departureDate: doc.departureDate,
+    });
+  }
+
   toMongoDocument() {
     return {
       id: this.id,
