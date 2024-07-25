@@ -59,7 +59,7 @@ describe('Update Journey Point endpoint', () => {
       .put(`/api/journey-points/${journeyPointId}`)
       .set('Cookie', [`token=${signUp2.jwt}`])
       .send({
-        departureDate: '2024-03-01',
+        arrivalDate: '2024-03-01',
       })
       .set('Accept', 'application/json');
 

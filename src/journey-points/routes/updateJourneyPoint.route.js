@@ -5,9 +5,9 @@ import validatePayload from '../../middleware/validatePayload.js';
 const router = express.Router();
 
 const schema = Joi.object({
-  arrivalDate: Joi.string().optional(),
+  arrivalDate: Joi.string().required(),
   departureDate: Joi.string().optional(),
-}).min(1);
+});
 
 async function handleUpdateJourneyPoint(req, res) {
   const userId = req.userId;
