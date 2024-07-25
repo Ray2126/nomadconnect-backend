@@ -15,7 +15,8 @@ describe('Update Profile endpoint', () => {
       occupation: 'Software Engineer',
       socialLinks: [
         { type: 'linkedin', 'url': 'https://www.linkedin.com/in/raymond-yang-96365419a/' },
-      ]
+      ],
+      profilePicture: 'data:image/png;base64,d7912dionadwAA',
     };
     const res = await request(app)
       .put('/api/profile')
@@ -37,7 +38,8 @@ describe('Update Profile endpoint', () => {
       occupation: 'Software Engineer',
       socialLinks: [
         { type: 'linkedin', 'url': 'https://www.linkedin.com/in/raymond-yang-96365419a/' },
-      ]
+      ],
+      profilePicture: 'data:image/png;base64,d7912dionadwAA',
     });
   });
 
@@ -63,6 +65,18 @@ describe('Update Profile endpoint', () => {
         name: 'social links is not an array',
         payload: {
           socialLinks: 'facebook',
+        }
+      },
+      {
+        name: 'profile picture is not base64 image',
+        payload: {
+          profilePicture: 'my-profile-picture'
+        }
+      },
+      {
+        name: 'profile picture exceeds maximum size',
+        payload: {
+          profilePicture: `data:image/png;base64,${'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/2DEJQAAAABJRU5ErkJggg==iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/2DEJQAAAABJRU5ErkJggg==iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/2DEJQAAAABJRU5ErkJggg=='.repeat(11000)}`, // Trial and error, this gave a 400 response so I assume it is about 2MB
         }
       },
     ];

@@ -14,6 +14,7 @@ class User {
     this.interests = props.interests;
     this.occupation = props.occupation;
     this.socialLinks = props.socialLinks;
+    this.profilePicture = props.profilePicture;
   }
 
   static fromMongoDocument(doc) {
@@ -30,6 +31,7 @@ class User {
       interests: doc.interests,
       occupation: doc.occupation,
       socialLinks: doc.socialLinks,
+      profilePicture: doc.profilePicture,
     });
   }
 
@@ -52,6 +54,7 @@ class User {
       interests: this.interests,
       occupation: this.occupation,
       socialLinks: this.socialLinks,
+      profilePicture: this.profilePicture,
     };
   }
 
@@ -68,6 +71,7 @@ class User {
       interests: this.interests,
       occupation: this.occupation,
       socialLinks: this.socialLinks,
+      profilePicture: this.profilePicture,
     };
   }
 
@@ -80,6 +84,7 @@ class User {
     this.interests = props.interests;
     this.occupation = props.occupation;
     this.socialLinks = props.socialLinks;
+    this.profilePicture = props.profilePicture;
   }
 }
 
