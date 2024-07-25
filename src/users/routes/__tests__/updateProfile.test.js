@@ -43,12 +43,43 @@ describe('Update Profile endpoint', () => {
     });
   });
 
+  it('should unset the entire profile of the user when given empty object in payload', async () => {
+    const { userId, jwt } = await mockSignUp();
+    const payload = {
+      name: 'Raymond',
+      bio: 'My name is Raymond and I am a Software Engineer',
+      hometown: 'Auckland, New Zealand',
+      sex: 'male',
+      birthday: '2024-10-01',
+      interests: ['gaming', 'programming', 'gym', 'sports'],
+      occupation: 'Software Engineer',
+      socialLinks: [
+        { type: 'linkedin', 'url': 'https://www.linkedin.com/in/raymond-yang-96365419a/' },
+      ],
+      profilePicture: 'data:image/png;base64,d7912dionadwAA',
+    };
+    await request(app)
+      .put('/api/profile')
+      .set('Cookie', [`token=${jwt}`])
+      .send(payload)
+      .set('Accept', 'application/json');
+
+    const res = await request(app)
+      .put('/api/profile')
+      .set('Cookie', [`token=${jwt}`])
+      .send({})
+      .set('Accept', 'application/json');
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual({
+      id: userId,
+      createdAt: expect.anything(),
+      email: 'testing@gmail.com',
+    });
+  });
+
   describe('payload validation', () => {
     const invalidScenarios = [
-      {
-        name: 'no fields supplied',
-        payload: {},
-      },
       {
         name: 'sex is not valid',
         payload: {
