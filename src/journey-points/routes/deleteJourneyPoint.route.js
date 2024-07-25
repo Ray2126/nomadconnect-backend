@@ -1,5 +1,6 @@
 import express from 'express';
 import journeyPointsCollection from '../mongodb/journeyPointsCollection.js';
+import authorizeMiddleware from '../../middleware/authorize.js';
 const router = express.Router();
 
 async function handleDeleteJourneyPoint(req, res) {
@@ -17,5 +18,5 @@ async function handleDeleteJourneyPoint(req, res) {
     .send();
 }
 
-router.delete('/api/journey-points/:id', handleDeleteJourneyPoint);
+router.delete('/api/journey-points/:id', authorizeMiddleware, handleDeleteJourneyPoint);
 export default router;

@@ -3,6 +3,7 @@ import Joi from 'joi';
 import JourneyPoint from '../models/JourneyPoint.js';
 import journeyPointsCollection from '../mongodb/journeyPointsCollection.js';
 import validatePayload from '../../middleware/validatePayload.js';
+import authorizeMiddleware from '../../middleware/authorize.js';
 const router = express.Router();
 
 const schema = Joi.object({
@@ -28,5 +29,5 @@ async function handleCreateJourneyPoint(req, res) {
     .json(journeyPoint.toApiResponse());
 }
 
-router.post('/api/journey-points', validatePayload(schema), handleCreateJourneyPoint);
+router.post('/api/journey-points', authorizeMiddleware, validatePayload(schema), handleCreateJourneyPoint);
 export default router;

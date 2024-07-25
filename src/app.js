@@ -2,7 +2,6 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-import authorizeMiddleware from './middleware/authorize.js';
 import authRoutes from './auth/routes/index.js';
 import userRoutes from './users/routes/index.js';
 import journeyPointRoutes from './journey-points/routes/index.js';
@@ -17,6 +16,6 @@ app.use(cookieParser());
 app.use(express.json({ limit: '3mb' })); // Largest image size for profile picture is 2MB + buffer
 app.use(authRoutes);
 app.use(userRoutes);
-app.use(authorizeMiddleware, journeyPointRoutes);
+app.use(journeyPointRoutes);
 
 export default app;
