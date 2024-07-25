@@ -1,7 +1,7 @@
 import express from 'express';
 import Joi from 'joi';
-import JourneyPoint from '../models/JourneyPoint';
-import journeyPointsCollection from '../mongodb/journeyPointsCollection';
+import JourneyPoint from '../models/JourneyPoint.js';
+import journeyPointsCollection from '../mongodb/journeyPointsCollection.js';
 import validatePayload from '../../middleware/validatePayload.js';
 const router = express.Router();
 
