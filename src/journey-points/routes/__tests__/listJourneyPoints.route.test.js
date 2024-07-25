@@ -18,8 +18,7 @@ describe('List Journey Points endpoint', () => {
       .set('Accept', 'application/json');
 
     const res = await request(app)
-      .get('/api/journey-points')
-      .set('Cookie', [`token=${jwt}`])
+      .get(`/api/users/${userId}/journey-points`)
       .send();
 
     expect(res.statusCode).toEqual(200);
@@ -39,11 +38,10 @@ describe('List Journey Points endpoint', () => {
   });
 
   it('should return an empty list when the user has no journey points', async () => {
-    const { jwt } = await mockSignUp();
+    const { userId } = await mockSignUp();
 
     const res = await request(app)
-      .get('/api/journey-points')
-      .set('Cookie', [`token=${jwt}`])
+      .get(`/api/users/${userId}/journey-points`)
       .send();
 
     expect(res.statusCode).toEqual(200);

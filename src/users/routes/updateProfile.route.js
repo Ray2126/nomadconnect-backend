@@ -3,6 +3,7 @@ const router = express.Router();
 import validatePayload from '../../middleware/validatePayload.js';
 import Joi from 'joi';
 import usersCollection from '../mongodb/usersCollection.js';
+import authorizeMiddleware from '../../middleware/authorize.js';
 
 const TWO_MEGA_BYTES = 2 * 1024 * 1024;
 const PROFILE_PICTURE_SIZE_LIMIT = Math.ceil(TWO_MEGA_BYTES * 1.33); // Approximate calculation for base64 encoding
@@ -33,5 +34,5 @@ async function handleUpdateProfile(req, res) {
     .json(user.toApiResponse());
 }
 
-router.put('/api/profile', validatePayload(schema), handleUpdateProfile);
+router.put('/api/profile', authorizeMiddleware, validatePayload(schema), handleUpdateProfile);
 export default router;

@@ -3,7 +3,7 @@ import journeyPointsCollection from '../mongodb/journeyPointsCollection.js';
 const router = express.Router();
 
 async function handleListJourneyPoints(req, res) {
-  const userId = req.userId;
+  const userId = req.params.id;
   const journeyPoints = await journeyPointsCollection.listJourneyPointsForUser(userId);
   return res
     .status(200)
@@ -12,5 +12,5 @@ async function handleListJourneyPoints(req, res) {
     });
 }
 
-router.get('/api/journey-points', handleListJourneyPoints);
+router.get('/api/users/:id/journey-points', handleListJourneyPoints);
 export default router;

@@ -2,6 +2,7 @@ import express from 'express';
 import Joi from 'joi';
 import journeyPointsCollection from '../mongodb/journeyPointsCollection.js';
 import validatePayload from '../../middleware/validatePayload.js';
+import authorizeMiddleware from '../../middleware/authorize.js';
 const router = express.Router();
 
 const schema = Joi.object({
@@ -25,5 +26,5 @@ async function handleUpdateJourneyPoint(req, res) {
     .json(journeyPoint.toApiResponse());
 }
 
-router.put('/api/journey-points/:id', validatePayload(schema), handleUpdateJourneyPoint);
+router.put('/api/journey-points/:id', authorizeMiddleware, validatePayload(schema), handleUpdateJourneyPoint);
 export default router;
