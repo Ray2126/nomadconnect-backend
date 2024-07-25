@@ -1,9 +1,9 @@
 import request from 'supertest';
 import app from '../app.js';
 
-async function mockSignUp() {
+async function mockSignUp({ email } = {}) {
   const payload = {
-    email: 'testing@gmail.com',
+    email: email ?? 'testing@gmail.com',
     password: '13768'
   };
   const res = await request(app)
