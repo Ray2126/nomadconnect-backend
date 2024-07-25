@@ -16,7 +16,7 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json({ limit: '3mb' })); // Largest image size for profile picture is 2MB + buffer
 app.use(authRoutes);
-app.use(authorizeMiddleware, userRoutes);
+app.use(userRoutes);
 app.use(authorizeMiddleware, journeyPointRoutes);
 
 export default app;
