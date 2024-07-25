@@ -46,8 +46,8 @@ class JourneyPoint {
   }
 
   update(props) {
-    this.arrivalDate = props.arrivalDate ?? this.arrivalDate;
-    this.departureDate = props.departureDate ?? this.departureDate;
+    this.arrivalDate = props.arrivalDate;
+    this.departureDate = props.departureDate;
   }
 
   toMongoUpdateDocument() {
